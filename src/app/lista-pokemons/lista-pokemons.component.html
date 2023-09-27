@@ -1,1 +1,61 @@
-<p>lista-pokemons works!</p>
+<!-- <p>lista-pokemons works!</p> -->
+<header class="headerContainer">
+  <div class="filterContent">
+    <input
+      type="text"
+      matInput
+      [matAutocomplete]="auto"
+      [(ngModel)]="filterText"
+      placeholder="Filtrar por nombre"
+      class="classInput"
+    />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPokemon">
+      <mat-option
+        *ngFor="let pokemon of filteredPokemons"
+        [value]="pokemon.name"
+      >
+        {{ pokemon.name }}
+      </mat-option>
+    </mat-autocomplete>
+    <button class="classButton" (click)="filterPokemons()">Filtrar</button>
+  </div>
+  <div class="searchContent">
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      placeholder="Busca tu Pokemon Favorito"
+      class="classInput"
+    />
+    <button class="classButton" (click)="searchPokemon()">Buscar</button>
+  </div>
+  <div class="favoriteContent" *ngIf="selectedPokemon">
+    <button>&#9733; {{ selectedPokemon.name }} &#9733;</button>
+  </div>
+</header>
+<section class="containerSection">
+  <div class="containerTable">
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Lista de Pokemones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pokemon of pokemonListPaginated">
+            <td>{{ pokemon.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <button (click)="prevPage()">Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="nextPage()">Siguiente</button>
+    </div>
+  </div>
+
+  <div class="containerDetails">
+    <h1>Descripcion del Pokemon</h1>
+  </div>
+</section>
