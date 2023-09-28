@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AppComponent } from './app.component';
 import { ListaPokemonsComponent } from './lista-pokemons/lista-pokemons.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     MatAutocompleteModule,
     MatInputModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

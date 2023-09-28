@@ -6,8 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PokemonService {
-  private apiUrl = 'https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0';
-
+  private apiUrl = 'https://pokeapi.co/api/v2/pokemon';
+  private apiUrlDetails = 'https://pokeapi.co/api/v2/pokemon/charizard'
+ 
   constructor(private http: HttpClient) { }
 
 // Get list of pokemons
@@ -15,7 +16,7 @@ export class PokemonService {
     return this.http.get(`${this.apiUrl}`);
   }
 // Get Deatils of pokemons
-  getDetails(id: number) {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  getDetails(name: string) {
+    return this.http.get<any>(`${this.apiUrl}/${name}`);
   }
 }

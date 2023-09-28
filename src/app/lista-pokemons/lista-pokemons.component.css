@@ -7,19 +7,17 @@
   border: 3px solid #207394;
   border-radius: 5px;
 }
-.filterContent {
+.filterContent, .favoriteContent {
+  width: 45%;
+  justify-content: center;
   display: flex;
   align-items: center;
 }
-.searchContent {
+/* .favoriteContent {
+  width: 45%;
   display: flex;
   align-items: center;
-}
-.favoriteContent {
-  width: 350px;
-  display: flex;
-  align-items: center;
-}
+} */
 .classInput {
   width: 300px;
   margin-right: 2px;
@@ -43,13 +41,10 @@
 .classButton:active {
   background-color: #ee8328;
 }
-
-.containerSection {
+.dataContent {
   display: grid;
   grid-template-columns: 50% 50%;
 }
-
-/* spacing */
 table {
   margin: 20px;
   table-layout: fixed;
@@ -58,44 +53,68 @@ table {
   border-collapse: collapse;
   border: 3px solid #207394;
 }
-thead th:nth-child(1) {
+
+.tableSumary {
+  margin: 20px;
+  table-layout: fixed;
+  width: 95%;
+  height: 40px;
+  border-collapse: collapse;
+  border: 3px solid #207394;
+}
+
+/* thead th:nth-child(1) {
   width: 50%;
-  /*     
+    
     display: inline;
-    text-align:center; */
+    text-align:center; 
 }
 thead th:nth-child(2) {
   width: 50%;
-  /*     
+      
     display: inline;
-    text-align:center; */
+    text-align:center; 
 }
 tbody td:nth-child(1) {
   width: 50%;
-  /*     
+      
     display: inline;
-    text-align:center; */
+    text-align:center; 
 }
 tbody td:nth-child(2) {
   width: 50%;
-  /*     
+     
     display: inline;
-    text-align:center; */
-}
+    text-align:center; 
+} */
 th,
 td {
-  padding: 20px;
+  padding: 10px;
+  border: 1px solid #207394;
+  text-align: center;
 }
-/* tbody td {
+.tbody td {
     display: block;
     text-align:center;
-} */
-
+} 
+.buttonDatails {
+  padding: 10px 20px;
+  background-color: #ffff;
+  color: #207394;
+  border: none;
+  cursor: pointer;
+  font-size: large;
+}
 .containerDetails {
   border: 3px solid #207394;
   margin: 20px;
   width: 95%;
   height: 100vh;
+}
+.buttonsContent {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 @media screen and (max-width: 600px) {
   table {

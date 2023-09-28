@@ -80,9 +80,12 @@
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
               "src/custom-styles.css",
-              "src/otros-estilos.css"
+              "src/otros-estilos.css",
+              "./node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+            ]
           }
         }
       }

@@ -1,5 +1,5 @@
-<!-- <p>lista-pokemons works!</p> -->
 <header class="headerContainer">
+  <!-- Input Filter with Autocomplete -->
   <div class="filterContent">
     <input
       type="text"
@@ -19,43 +19,106 @@
     </mat-autocomplete>
     <button class="classButton" (click)="filterPokemons()">Filtrar</button>
   </div>
-  <div class="searchContent">
-    <input
-      type="text"
-      [(ngModel)]="searchText"
-      placeholder="Busca tu Pokemon Favorito"
-      class="classInput"
-    />
-    <button class="classButton" (click)="searchPokemon()">Buscar</button>
-  </div>
-  <div class="favoriteContent" *ngIf="selectedPokemon">
-    <button>&#9733; {{ selectedPokemon.name }} &#9733;</button>
+  <!-- Favorite Pokemon Render -->
+  <div class="favoriteContent">
+    <ng-container *ngFor="let favorite of favoritePokemons">
+      <button class="buttonDatails">&#9733; {{ favorite.name }} &#9733;</button>
+    </ng-container>
   </div>
 </header>
-<section class="containerSection">
-  <div class="containerTable">
-    <div>
+
+<section class="dataContainer">
+  <div class="dataContent">
+    <!-- Paginated Table -->
+    <div class="containerTable">
       <table>
         <thead>
           <tr>
             <th>Lista de Pokemones</th>
+            <th>Selecciona tu Favorito </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pokemon of pokemonListPaginated">
-            <td>{{ pokemon.name }}</td>
+          <tr
+            *ngFor="let pokemon of pokemonListPaginated">
+            <td>
+              <button class="buttonDatails" (click)="getDetails(pokemon.name)">
+                {{ pokemon.name }}
+              </button>
+              </td>
+              <td>
+              <button class="buttonDatails" (click)="markAsFavorite(pokemon)">
+                <ng-container
+                  *ngIf="favoritePokemons.includes(pokemon); else notFavorite"
+                >
+                  <!-- mark As Favorite -->
+                  <span class="material-symbols-outlined"> hotel_class </span>
+                </ng-container>
+                <ng-template #notFavorite>
+                  <!-- Dismark As Favorite -->
+                  <span class="material-symbols-outlined"> grade </span>
+                </ng-template>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div>
-      <button (click)="prevPage()">Anterior</button>
-      <span>Página {{ currentPage }} de {{ totalPages }}</span>
-      <button (click)="nextPage()">Siguiente</button>
+    <!--  -->
+    <!-- Container Details by name selected -->
+    <div class="containerDetails">
+      <h1>Descripcion del Pokemon</h1>
+      <div *ngIf="containerDetailsContent">
+        <h2>Nombre: {{ containerDetailsContent.name }}</h2>
+        <ul>
+          <li>Especie: {{ containerDetailsContent.species.name }}</li>
+          <li>Altura: {{ containerDetailsContent.height }} decímetros</li>
+          <li>Peso: {{ containerDetailsContent.weight }} hectogramos</li>
+          <li>
+            Experiencia Base: {{ containerDetailsContent.base_experience }}
+          </li>
+        </ul>
+        <h2>Habilidades:</h2>
+        <ul>
+          <li *ngFor="let ability of containerDetailsContent.abilities">
+            {{ ability.ability.name }}
+          </li>
+        </ul>
+        <h2>Tipos:</h2>
+        <ul>
+          <li *ngFor="let type of containerDetailsContent.types">
+            {{ type.type.name }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-
-  <div class="containerDetails">
-    <h1>Descripcion del Pokemon</h1>
+  <!--  -->
+  <!-- "Anterior" && "Siguiente" Button -->
+  <div class="buttonsContent">
+    <button class="classButton" (click)="prevPage()">Anterior</button>
+    <span class="paginated">Página {{ currentPage }} de {{ totalPages }}</span>
+    <button class="classButton" (click)="nextPage()">Siguiente</button>
   </div>
+  <!--  -->
+</section>
+<section class="summaryContent">
+  <table class="tableSumary">
+    <thead>
+      <tr>
+        <th>Letra</th>
+        <ng-container *ngFor="let letter of summaryDataKeys">
+          <td>{{ letter }}</td>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Cantidad de Pokémon</th>
+        <ng-container *ngFor="let letter of summaryDataKeys">
+          <td>{{ summaryData[letter] }}</td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
 </section>
