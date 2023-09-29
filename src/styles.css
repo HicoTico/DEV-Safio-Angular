@@ -1,4 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+/* Variables */
+/* color Pallette */
+:root {
+  --color-1: #207394;
+  --color-2: #ee8328;
+  --color-3: #e14318;
+  --color-4: #eedd7a;
+  --color-5: #fdce10;
+  --color-6: #f4f4f4;
+  
+  /* Font Family */
+  --font-family-1: "Lato", sans-serif;
+  --font-family-2: "Montserrat", sans-serif;
+  --font-family-3: "Roboto", sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* General Details  */
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family:var(--font-family-3);
+}

@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { faStar as farStar } from '@fortawesome/free-solid-svg-icons';
-import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
 import { PokemonService } from '../services/pokemon.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-
+import { MatDialog } from '@angular/material/dialog';
+import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
 
 @Component({
   selector: 'app-lista-pokemons',
@@ -17,13 +15,14 @@ export class ListaPokemonsComponent {
   filteredPokemons: any[] = this.pokemonList;
   favoritePokemons: any[] = [];
   summaryData: { [letter: string]: number } = {};
-  filterText: string = "";
-  // searchText: string = "";
-  // selectedPokemon: any;
+  filterText: string = '';
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 0;
   containerDetailsContent: any;
+  dialogDetailsContent: any;
+  pokemonDetails: any;
+  // dialog: MatDialog;
   displayPokemon(pokemon: any): string {
     return pokemon ? pokemon.name : '';
   }
@@ -31,8 +30,8 @@ export class ListaPokemonsComponent {
     return Object.keys(this.summaryData);
   }
 
-  constructor(private pokemonService: PokemonService, library: FaIconLibrary) {
-    library.addIcons(fasStar, farStar);
+  constructor(private pokemonService: PokemonService, public dialog: MatDialog) {
+    this.dialog = dialog;
   }
 
   ngOnInit() {
@@ -81,59 +80,52 @@ export class ListaPokemonsComponent {
   //Function filter By Pokemon Name
   filterPokemons() {
     this.currentPage = 1;
-    this.pokemonListPaginated = this.pokemonList.filter(pokemon =>
+    this.pokemonListPaginated = this.pokemonList.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(this.filterText.toLowerCase())
     );
     this.filteredPokemons = this.pokemonListPaginated;
   }
- autocompliteSelected(event: MatAutocompleteSelectedEvent) {
-  this.filterText = event.option.value;
-  this.filterPokemons();
- }
+  autocompliteSelected(event: MatAutocompleteSelectedEvent) {
+    this.filterText = event.option.value;
+    this.filterPokemons();
+  }
 
- getDetails(name: string) {
-  this.pokemonService.getDetails(name).subscribe((details) => {
-    console.log(details, 'SI arroja data linea 84');
-    this.containerDetailsContent = details;
-  })
-}
-markAsFavorite(pokemon: any) {
-  const index = this.favoritePokemons.indexOf(pokemon);
-
-  if (index !== -1) {
-    // El Pokémon ya está en la lista de favoritos, así que lo desmarcamos
-    this.favoritePokemons.splice(index, 1);
-  } else {
-    // El Pokémon no está en la lista de favoritos, así que lo marcamos
-    this.favoritePokemons.push(pokemon);
+  getDetails(name: string) {
+    this.pokemonService.getDetails(name).subscribe((details) => {
+      console.log(details, 'SI arroja data linea 84');
+      this.containerDetailsContent = details;
+    });
+  }
+  markAsFavorite(pokemon: any) {
+    const index = this.favoritePokemons.indexOf(pokemon);
+    if (index !== -1) {
+      // El Pokémon ya está en la lista de favoritos, así que lo desmarcamos
+      this.favoritePokemons.splice(index, 1);
+    } else {
+      // El Pokémon no está en la lista de favoritos, así que lo marcamos
+      this.favoritePokemons.push(pokemon);
+    }
+  }
+  calculateSummary() {
+    this.pokemonList.forEach((pokemon) => {
+      const firstLetter = pokemon.name.charAt(0).toUpperCase();
+      if (this.summaryData[firstLetter]) {
+        this.summaryData[firstLetter]++;
+      } else {
+        this.summaryData[firstLetter] = 1;
+      }
+    });
+  }
+  //Function to open Pokemon Details Dialog
+  getDetailsTopenDialog(name: string): void {
+    this.pokemonService.getDetails(name).subscribe((details) => {
+      this.pokemonDetails = details;
+      this.openDialog();
+    });
+  }
+  openDialog (): void {
+    const dialogRef = this.dialog.open(PokemonDetailComponent,{
+      data: this.pokemonDetails
+    });
   }
 }
-calculateSummary(){
-  this.pokemonList.forEach(pokemon => {
-    const firstLetter = pokemon.name.charAt(0).toUpperCase();
-    if(this.summaryData[firstLetter]){
-      this.summaryData[firstLetter]++;
-    } else {
-      this.summaryData[firstLetter] = 1;
-    }
-  });
-}
-
-
-
-// markAsFavorite(pokemon: any) {
-//   if(!this.favoritePokemons.includes(pokemon)) {
-//  this.favoritePokemons.push(pokemon);
-//   }
-// }
-  
- }
-//  searchPokemon (){
-//   const foundPokemon = this.pokemonList.find(pokemon => pokemon.name.toLowerCase() === this.searchText.toLowerCase());
-//  if (foundPokemon) {
-//   this.selectedPokemon = foundPokemon;
-//  } else {
-//   this.selectedPokemon = null;
-//  }
-// }
-

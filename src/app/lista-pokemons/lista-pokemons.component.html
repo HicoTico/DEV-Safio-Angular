@@ -22,7 +22,12 @@
   <!-- Favorite Pokemon Render -->
   <div class="favoriteContent">
     <ng-container *ngFor="let favorite of favoritePokemons">
-      <button class="buttonDatails">&#9733; {{ favorite.name }} &#9733;</button>
+      <button
+        class="buttonDatails"
+        (click)="getDetailsTopenDialog(favorite.name)"
+      >
+        &#9733; {{ favorite.name }} &#9733;
+      </button>
     </ng-container>
   </div>
 </header>
@@ -32,21 +37,18 @@
     <!-- Paginated Table -->
     <div class="containerTable">
       <table>
-        <thead>
-          <tr>
-            <th>Lista de Pokemones</th>
-            <th>Selecciona tu Favorito </th>
-          </tr>
-        </thead>
+        <caption>
+          Lista de Pokemon
+        </caption>
+        <thead></thead>
         <tbody>
-          <tr
-            *ngFor="let pokemon of pokemonListPaginated">
+          <tr *ngFor="let pokemon of pokemonListPaginated">
             <td>
               <button class="buttonDatails" (click)="getDetails(pokemon.name)">
                 {{ pokemon.name }}
               </button>
-              </td>
-              <td>
+            </td>
+            <td>
               <button class="buttonDatails" (click)="markAsFavorite(pokemon)">
                 <ng-container
                   *ngIf="favoritePokemons.includes(pokemon); else notFavorite"
@@ -66,32 +68,35 @@
     </div>
     <!--  -->
     <!-- Container Details by name selected -->
-    <div class="containerDetails">
-      <h1>Descripcion del Pokemon</h1>
-      <div *ngIf="containerDetailsContent">
-        <h2>Nombre: {{ containerDetailsContent.name }}</h2>
-        <ul>
-          <li>Especie: {{ containerDetailsContent.species.name }}</li>
-          <li>Altura: {{ containerDetailsContent.height }} decímetros</li>
-          <li>Peso: {{ containerDetailsContent.weight }} hectogramos</li>
-          <li>
-            Experiencia Base: {{ containerDetailsContent.base_experience }}
-          </li>
-        </ul>
-        <h2>Habilidades:</h2>
-        <ul>
-          <li *ngFor="let ability of containerDetailsContent.abilities">
-            {{ ability.ability.name }}
-          </li>
-        </ul>
-        <h2>Tipos:</h2>
-        <ul>
-          <li *ngFor="let type of containerDetailsContent.types">
-            {{ type.type.name }}
-          </li>
-        </ul>
+    <aside class="containerDetails">
+      <div class="tittleCeo">
+        <h1>Descripcion del Pokemon</h1>
       </div>
-    </div>
+        <div *ngIf="containerDetailsContent">
+          <h2>Nombre: {{ containerDetailsContent.name }}</h2>
+          <ul>
+            <li>Especie: {{ containerDetailsContent.species.name }}</li>
+            <li>Altura: {{ containerDetailsContent.height }} decímetros</li>
+            <li>Peso: {{ containerDetailsContent.weight }} hectogramos</li>
+            <li>
+              Experiencia Base: {{ containerDetailsContent.base_experience }}
+            </li>
+          </ul>
+          <h2>Habilidades:</h2>
+          <ul>
+            <li *ngFor="let ability of containerDetailsContent.abilities">
+              {{ ability.ability.name }}
+            </li>
+          </ul>
+          <h2>Tipos:</h2>
+          <ul>
+            <li *ngFor="let type of containerDetailsContent.types">
+              {{ type.type.name }}
+            </li>
+          </ul>
+        </div>
+      
+    </aside>
   </div>
   <!--  -->
   <!-- "Anterior" && "Siguiente" Button -->
@@ -104,9 +109,11 @@
 </section>
 <section class="summaryContent">
   <table class="tableSumary">
+    <caption>
+      ¿Sabias Cuantos Pokemons existen por Letra Del Abecedario?
+    </caption>
     <thead>
       <tr>
-        <th>Letra</th>
         <ng-container *ngFor="let letter of summaryDataKeys">
           <td>{{ letter }}</td>
         </ng-container>
@@ -114,7 +121,6 @@
     </thead>
     <tbody>
       <tr>
-        <th>Cantidad de Pokémon</th>
         <ng-container *ngFor="let letter of summaryDataKeys">
           <td>{{ summaryData[letter] }}</td>
         </ng-container>

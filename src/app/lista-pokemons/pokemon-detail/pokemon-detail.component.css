@@ -1,0 +1,15 @@
+/* Styling some Details */
+.containerDialog {
+  width: 350px;
+  height: 350px;
+  background-color:var(--color-4);
+}
+/* Estilos para los botones de cierre */
+.closebtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color:var(--color-4);
+  align-self: flex-end;
+  font-size: 40px;
+}
