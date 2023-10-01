@@ -6,11 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 import { AppComponent } from './app.component';
-import { ListaPokemonsComponent } from './lista-pokemons/lista-pokemons.component';
+import { ListaPokemonsComponent } from './pages/lista-pokemons/lista-pokemons.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { PokemonDetailComponent } from './lista-pokemons/pokemon-detail/pokemon-detail.component';
+import { PokemonDetailComponent } from './components/pokemon-detail/pokemon-detail.component';
 
 
 
@@ -18,7 +18,8 @@ import { PokemonDetailComponent } from './lista-pokemons/pokemon-detail/pokemon-
   declarations: [
     AppComponent,
     ListaPokemonsComponent,
-    PokemonDetailComponent
+    PokemonDetailComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -29,7 +30,7 @@ import { PokemonDetailComponent } from './lista-pokemons/pokemon-detail/pokemon-
     MatAutocompleteModule,
     MatInputModule,
     MatDialogModule,
-    FontAwesomeModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

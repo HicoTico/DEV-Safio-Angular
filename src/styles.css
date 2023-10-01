@@ -18,8 +18,10 @@
 html,
 body {
   height: 100%;
+  font-family: var(--font-family-1);
 }
 body {
   margin: 0;
-  font-family:var(--font-family-3);
+  font-family:var(--font-family-1);
+  background-color: var(--color-6);
 }

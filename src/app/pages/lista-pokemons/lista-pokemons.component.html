@@ -1,0 +1,146 @@
+<header class="headerContainer">
+  <!-- Input Filter with Autocomplete -->
+  <div class="filterContent">
+    <input
+      type="text"
+      matInput
+      [matAutocomplete]="auto"
+      [(ngModel)]="filterText"
+      placeholder="&#9733; Encuentra tu Pokémon favorito Aqui &#9733;"
+      class="classInput"
+      (input)="onInputChange()"
+    />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPokemon">
+      <mat-option
+        *ngFor="let pokemon of filteredPokemons"
+        [value]="pokemon.name"
+        (click)="autocompliteSelected(pokemon.name)"
+      >
+        {{ pokemon.name }}
+      </mat-option>
+    </mat-autocomplete>
+    <!-- Button Show initial list paginated -->
+    <button class="classButton" (click)="resetFilter()" *ngIf="showResetButton">
+      Mostrar Lista
+    </button>
+  </div>
+  <!--  -->
+
+  <!-- Favorite Pokemon Render -->
+  <div class="favoriteContent">
+    <ng-container *ngFor="let favorite of favoritePokemons">
+      <button
+        class="buttonFavorite"
+        (click)="getDetailsTopenDialog(favorite.name)"
+      >
+        &#9733; {{ favorite.name }} &#9733;
+      </button>
+    </ng-container>
+  </div>
+</header>
+
+<section>
+  <div class="dataContent">
+    <!-- Paginated Table -->
+    <div class="containerTablePaginated">
+      <table class="tablePaginated">
+        <caption>
+          <h1>Lista de Pokemon</h1>
+        </caption>
+        <tbody>
+          <tr *ngFor="let pokemon of pokemonListPaginated">
+            <td data-label="pokemon">
+              <button class="buttonDatails" (click)="getDetails(pokemon.name)">
+                {{ pokemon.name }}
+              </button>
+            </td>
+            <td data-label="pokemon">
+              <button class="buttonDatails" (click)="markAsFavorite(pokemon)">
+                <ng-container
+                  *ngIf="favoritePokemons.includes(pokemon); else notFavorite"
+                >
+                  <!-- mark As Favorite -->
+                  <span class="material-symbols-outlined"> hotel_class </span>
+                </ng-container>
+                <ng-template #notFavorite>
+                  <!-- Unchek As Favorite -->
+                  <span class="material-symbols-outlined"> grade </span>
+                </ng-template>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--  -->
+    <!-- Container Details by name selected -->
+    <aside class="containerDetails">
+      <div class="tittleSeo">
+        <h2>Descripcion del Pokemon</h2>
+      </div>
+      <div class="detailsContent" *ngIf="containerDetailsContent">
+        <h2>{{ containerDetailsContent.name }}</h2>
+        <dl>
+          <dt><b>Especie:</b></dt>
+          <dd>{{ containerDetailsContent.species.name }}</dd>
+          <dt><b>Altura:</b></dt>
+          <dd>{{ containerDetailsContent.height }} decímetros</dd>
+          <dt><b>Peso:</b></dt>
+          <dd>{{ containerDetailsContent.weight }} hectogramos</dd>
+          <dt><b>Experiencia Base:</b></dt>
+          <dd>{{ containerDetailsContent.base_experience }}</dd>
+          <dt> <b>Habilidades</b></dt>
+          <dd *ngFor="let ability of containerDetailsContent.abilities">
+            {{ ability.ability.name }}
+          </dd>
+          <dt><b>Tipos</b></dt>
+          <dd *ngFor="let type of containerDetailsContent.types">
+            {{ type.type.name }}
+          </dd>
+          <dt><b>Movimientos</b></dt>
+          <dd>{{ containerDetailsContent.moves[3].move.name }}</dd>
+          <dd>{{ containerDetailsContent.moves[5].move.name }}</dd>
+          <dd>{{ containerDetailsContent.moves[10].move.name }}</dd>
+          <dd>{{ containerDetailsContent.moves[15].move.name }}</dd>
+        </dl>
+        <h4>
+          <a href="https://www.pokemon.com/el">¡Salta a la Zona Pokémon!</a>
+        </h4>
+      </div>
+    </aside>
+  </div>
+  <!-- "Anterior" && "Siguiente" Button -->
+  <div class="buttonsContent">
+    <button class="classButton" (click)="prevPage()">Anterior</button>
+    <span class="paginated">Página {{ currentPage }} de {{ totalPages }}</span>
+    <button class="classButton" (click)="nextPage()">Siguiente</button>
+  </div>
+  <!--  -->
+</section>
+<!-- SummaryTable to match Letters of the alphabet -->
+<section class="summaryContent">
+  <div class="containerTableSumary">
+    <table class="tableSumary">
+      <caption>
+        <h2>
+          ¿Sabias Cuantos Pokemons hacen Match con cada Letra Del Abecedario?
+        </h2>
+      </caption>
+      <thead>
+        <tr>
+          <ng-container *ngFor="let letter of summaryDataKeys">
+            <td>{{ letter }}</td>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <ng-container *ngFor="let letter of summaryDataKeys">
+            <td>{{ summaryData[letter] }}</td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<!-- The End -->

@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Tu Pokemon Favorito es:</h2>
+<!-- <div class="containerDialog"> -->
+  <div mat-dialog-content>
+    <h3>&#9733; {{ data.name }} &#9733;</h3>
+    Y Sus Mejores Movimientos son:
+    <ul>
+      <li>{{ data.moves[0].move.name }}</li>
+      <li>{{ data.moves[4].move.name }}</li>
+      <li>{{ data.moves[8].move.name }}</li>
+    </ul>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+  </div>

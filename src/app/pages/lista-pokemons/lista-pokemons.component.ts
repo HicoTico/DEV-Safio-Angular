@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { PokemonService } from '../services/pokemon.service';
+import { PokemonService } from '../../services/pokemonService/pokemon.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog } from '@angular/material/dialog';
-import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
+import { MatButtonModule } from '@angular/material/button';
+import { PokemonDetailComponent } from '../../components/pokemon-detail/pokemon-detail.component';
 
 @Component({
   selector: 'app-lista-pokemons',
@@ -17,11 +18,12 @@ export class ListaPokemonsComponent {
   summaryData: { [letter: string]: number } = {};
   filterText: string = '';
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 7;
   totalPages: number = 0;
   containerDetailsContent: any;
   dialogDetailsContent: any;
   pokemonDetails: any;
+  showResetButton: boolean;
   // dialog: MatDialog;
   displayPokemon(pokemon: any): string {
     return pokemon ? pokemon.name : '';
@@ -32,6 +34,7 @@ export class ListaPokemonsComponent {
 
   constructor(private pokemonService: PokemonService, public dialog: MatDialog) {
     this.dialog = dialog;
+    this.showResetButton = false;
   }
 
   ngOnInit() {
@@ -62,7 +65,6 @@ export class ListaPokemonsComponent {
       startIndex + this.itemsPerPage
     );
   }
-
   //Function "Anterior" Botton
   prevPage() {
     if (this.currentPage > 1) {
@@ -77,6 +79,13 @@ export class ListaPokemonsComponent {
       this.updatePagination();
     }
   }
+   //Function to aply autocomplete on input
+  onInputChange() {
+    this.filteredPokemons = this.pokemonList.filter(pokemon =>
+      pokemon.name.toLowerCase().includes(this.filterText.toLowerCase())
+    );
+    this.showResetButton = true;
+  }
   //Function filter By Pokemon Name
   filterPokemons() {
     this.currentPage = 1;
@@ -85,27 +94,37 @@ export class ListaPokemonsComponent {
     );
     this.filteredPokemons = this.pokemonListPaginated;
   }
-  autocompliteSelected(event: MatAutocompleteSelectedEvent) {
-    this.filterText = event.option.value;
+  //Function to Autocomplete pokemon name
+  autocompliteSelected(pokemonName: string) {
+    this.filterText = pokemonName;
+    this.showResetButton = true;
     this.filterPokemons();
   }
-
+   //Function button to show intial list after filterpokemon
+  resetFilter() {
+    this.filterText = '';
+    this.updatePagination();
+    this.showResetButton= false;
+  }
+   //Function to Get Details to render in aside container
   getDetails(name: string) {
     this.pokemonService.getDetails(name).subscribe((details) => {
       console.log(details, 'SI arroja data linea 84');
       this.containerDetailsContent = details;
     });
   }
+   //Function to check & uncheck as a Favorite pokemon
   markAsFavorite(pokemon: any) {
     const index = this.favoritePokemons.indexOf(pokemon);
     if (index !== -1) {
-      // El Pokémon ya está en la lista de favoritos, así que lo desmarcamos
+      // Pokemon is already on the favorites list, so we uncheck it
       this.favoritePokemons.splice(index, 1);
     } else {
-      // El Pokémon no está en la lista de favoritos, así que lo marcamos
+      // Pokemon is already on the favorites list, so we check it
       this.favoritePokemons.push(pokemon);
     }
   }
+  //Function to calculate stats of pokemon by letters of the alphabet
   calculateSummary() {
     this.pokemonList.forEach((pokemon) => {
       const firstLetter = pokemon.name.charAt(0).toUpperCase();
@@ -116,13 +135,14 @@ export class ListaPokemonsComponent {
       }
     });
   }
-  //Function to open Pokemon Details Dialog
+  //Function to show Pokemon Details on pokemon-Details.component (Dialog)
   getDetailsTopenDialog(name: string): void {
     this.pokemonService.getDetails(name).subscribe((details) => {
       this.pokemonDetails = details;
       this.openDialog();
     });
   }
+  //Function to open pokemon-Details.component (Dialog)
   openDialog (): void {
     const dialogRef = this.dialog.open(PokemonDetailComponent,{
       data: this.pokemonDetails
