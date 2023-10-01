@@ -89,22 +89,22 @@
           <dd>{{ containerDetailsContent.weight }} hectogramos</dd>
           <dt><b>Experiencia Base:</b></dt>
           <dd>{{ containerDetailsContent.base_experience }}</dd>
-          <dt> <b>Habilidades</b></dt>
+          <dt> <b>Habilidades:</b></dt>
           <dd *ngFor="let ability of containerDetailsContent.abilities">
             {{ ability.ability.name }}
           </dd>
-          <dt><b>Tipos</b></dt>
+          <dt><b>Tipos:</b></dt>
           <dd *ngFor="let type of containerDetailsContent.types">
             {{ type.type.name }}
           </dd>
-          <dt><b>Movimientos</b></dt>
+          <dt><b>Movimientos:</b></dt>
           <dd>{{ containerDetailsContent.moves[3].move.name }}</dd>
           <dd>{{ containerDetailsContent.moves[5].move.name }}</dd>
           <dd>{{ containerDetailsContent.moves[10].move.name }}</dd>
           <dd>{{ containerDetailsContent.moves[15].move.name }}</dd>
         </dl>
         <h4>
-          <a href="https://www.pokemon.com/el">¡Salta a la Zona Pokémon!</a>
+          <a href="https://www.pokemon.com/el">¡Salta a la Zona Pokemon!</a>
         </h4>
       </div>
     </aside>
